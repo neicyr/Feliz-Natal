@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartão de Natal - clique nele</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      border-top: 0cap;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      background-color: #f0f8ff;
+      font-family: 'Arial', sans-serif;
+      position: relative;
+    }
+
+    .card {
+      width: 350px; /* Tamanho do cartão */
+     height: 80vh; /* Ajusta altura para caber melhor em dispositivos móveis */
+      max-height: 500px;
+      position: relative;
+        border-top: 0cap;
+      cursor: pointer;
+      transition: transform 1s ease-in-out;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .card img.capa {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .inside {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Posiciona o conteúdo para a base */
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    }
+
+    .inside img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1; /* Coloca a imagem no fundo */
+    }
+
+    .inside h2 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: white;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    .inside p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: white;
+      text-shadow: 2px 2px 5px #000;
+      margin-bottom: 30px; /* Adiciona uma margem para o texto não grudar na parte inferior */
+    }
+
+    .card.open .inside {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .card.open img.capa {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Ajuste para o "Clique aqui" ficar fora do cartão, rente à borda inferior */
+    .click-here {
+      position: absolute;
+      bottom: 5px; /* Agora ele está rente à borda inferior */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.7);
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    /* Garante que o "Clique aqui" fique visível fora do cartão */
+    .card.open + .click-here {
+      display: none; /* Esconde o "Clique aqui" quando o cartão for aberto */
+    }
+  </style>
+</head>
+<body>
+  <!-- "Clique aqui" Fora do Cartão -->
+  <div class="click-here" onclick="openCard()">Clique aqui</div>
+
+  <div class="card" onclick="openCard()">
+    <!-- Capa -->
+    <img class="capa" src="capa 12.jpg" alt="Capa do Cartão">
+
+    <!-- Dentro -->
+    <div class="inside">
+      <img src="dentro.jpg" alt="Fundo de Natal"> <!-- Imagem de dentro -->
+      <p id="message"></p>
+    </div>
+  </div>
+
+   <audio id="jingle-bell" src="jingle-bells-violin-loop-8645.mp3"></audio>
+
+  <script>
+    // Lista de frases
+    const phrases = [
+      "Que a paz do Natal toque sua alma e faça de cada momento algo especial.",
+    
+    ];
+
+    function openCard() {
+      const card = document.querySelector('.card');
+      const message = document.getElementById('message');
+      const audio = document.getElementById('jingle-bell');
+      const clickHere = document.querySelector('.click-here');
+
+      // Abrir cartão
+      card.classList.add('open');
+
+      // Esconder o botão "Clique aqui" quando o cartão for aberto
+      clickHere.style.display = 'none';
+
+      // Frase aleatória
+      const randomIndex = Math.floor(Math.random() * phrases.length);
+      message.textContent = phrases[randomIndex];
+
+      // Música
+      audio.play();
+    }
+  </script>
+</body>
+</html>
